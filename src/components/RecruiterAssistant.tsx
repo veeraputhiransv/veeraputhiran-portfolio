@@ -30,11 +30,11 @@ type RecruiterAssistantProps = {
 function SourceCard({ source }: { source: RecruiterSource }) {
   const body = (
     <>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-accent">
-        {source.type}
+      <p className="label-mono text-accent">{source.type}</p>
+      <p className="mt-1.5 text-sm font-medium text-ink">{source.title}</p>
+      <p className="mt-1 text-xs leading-5 text-ink-muted">
+        {source.reference}
       </p>
-      <p className="mt-1 text-sm font-medium text-ink">{source.title}</p>
-      <p className="mt-1 text-xs text-ink-muted">{source.reference}</p>
     </>
   )
 
@@ -44,14 +44,18 @@ function SourceCard({ source }: { source: RecruiterSource }) {
         href={source.url}
         target="_blank"
         rel="noreferrer"
-        className="block rounded-md border border-line bg-paper p-3 transition-colors hover:border-line-strong"
+        className="block rounded-md border border-line bg-paper-deep p-3 transition-colors hover:border-line-strong"
       >
         {body}
       </a>
     )
   }
 
-  return <div className="rounded-md border border-line bg-paper p-3">{body}</div>
+  return (
+    <div className="rounded-md border border-line bg-paper-deep p-3">
+      {body}
+    </div>
+  )
 }
 
 export function RecruiterAssistant({ open, onClose }: RecruiterAssistantProps) {
@@ -137,14 +141,16 @@ export function RecruiterAssistant({ open, onClose }: RecruiterAssistantProps) {
       >
         <header className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
           <div>
+            <p className="label-mono text-accent">Portfolio Assistant</p>
             <h2
               id={titleId}
-              className="font-serif text-2xl font-semibold tracking-tight text-ink"
+              className="mt-1.5 font-serif text-2xl font-semibold tracking-tight text-ink"
             >
               Ask Veera
             </h2>
-            <p className="mt-1 text-sm leading-6 text-ink-secondary">
-              Evidence-grounded answers from my public engineering portfolio.
+            <p className="mt-1.5 text-sm leading-6 text-ink-secondary">
+              Retrieval-grounded answers from my public engineering portfolio,
+              returned with the evidence they came from.
             </p>
           </div>
           <button
@@ -158,16 +164,14 @@ export function RecruiterAssistant({ open, onClose }: RecruiterAssistantProps) {
         </header>
 
         <div className="border-b border-line px-5 py-4">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-            Suggested questions
-          </p>
+          <p className="label-mono text-ink-muted">Suggested questions</p>
           <div className="mt-3 flex flex-wrap gap-2">
             {SUGGESTED_QUESTIONS.map((question) => (
               <button
                 key={question}
                 type="button"
                 onClick={() => void ask(question)}
-                className="rounded-md border border-line bg-paper px-2.5 py-1.5 text-left text-xs text-ink-secondary transition-colors hover:border-line-strong hover:text-ink"
+                className="rounded-md border border-line bg-paper-deep px-2.5 py-1.5 text-left text-xs text-ink-secondary transition-colors hover:border-line-strong hover:text-ink"
               >
                 {question}
               </button>
@@ -185,23 +189,21 @@ export function RecruiterAssistant({ open, onClose }: RecruiterAssistantProps) {
 
           {turns.map((turn) => (
             <article key={turn.id}>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+              <p className="label-mono text-ink-muted">
                 {turn.role === 'user' ? 'Question' : 'Answer'}
               </p>
               <div
                 className={
                   turn.role === 'user'
                     ? 'mt-2 rounded-md bg-navy px-3 py-2.5 text-sm leading-6 text-white'
-                    : 'mt-2 rounded-md border border-line bg-paper px-3 py-2.5 text-sm leading-6 text-ink'
+                    : 'mt-2 rounded-md border border-line bg-paper-deep px-3 py-2.5 text-sm leading-6 whitespace-pre-line text-ink'
                 }
               >
                 {turn.content}
               </div>
               {turn.sources && turn.sources.length > 0 ? (
                 <div className="mt-3">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
-                    Sources / Evidence
-                  </p>
+                  <p className="label-mono text-ink-muted">Sources / Evidence</p>
                   <div className="mt-2 grid gap-2">
                     {turn.sources.map((source) => (
                       <SourceCard
@@ -239,7 +241,7 @@ export function RecruiterAssistant({ open, onClose }: RecruiterAssistantProps) {
               onChange={(event) => setInput(event.target.value)}
               placeholder="Ask about backend, RAG, Java, FastAPI, or cloud"
               maxLength={2000}
-              className="min-w-0 flex-1 rounded-md border border-line bg-paper px-3 py-2.5 text-sm text-ink outline-none focus:border-accent"
+              className="min-w-0 flex-1 rounded-md border border-line bg-paper-deep px-3 py-2.5 text-sm text-ink outline-none focus:border-accent"
             />
             <button
               type="submit"

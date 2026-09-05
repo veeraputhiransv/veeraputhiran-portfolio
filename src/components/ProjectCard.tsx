@@ -1,33 +1,44 @@
 import { ArrowUpRight } from 'lucide-react'
 import { hasProjectLink, type Project } from '../data/projects'
 import { ArchitectureFlow } from './ArchitectureFlow'
+import { DecisionList } from './DecisionList'
+import { Disclosure } from './Disclosure'
+import { TechList } from './TechList'
 
 type ProjectCardProps = {
   project: Project
+  index: number
+  onAskVeera: () => void
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, index, onAskVeera }: ProjectCardProps) {
   const live = hasProjectLink(project.links.live) ? project.links.live : undefined
   const repo = hasProjectLink(project.links.repo) ? project.links.repo : undefined
-  const caseStudy = hasProjectLink(project.links.caseStudy)
-    ? project.links.caseStudy
-    : undefined
-  const hasLinks = Boolean(live || repo || caseStudy)
+  const headingId = `project-${project.id}-title`
 
   return (
-    <article className="rounded-lg border border-line bg-surface p-6 transition-colors hover:border-line-strong sm:p-8">
-      <div className="flex flex-wrap items-center gap-2">
-        <p className="text-xs font-semibold tracking-[0.14em] uppercase text-accent">
-          {project.tag}
-        </p>
+    <article
+      id={`project-${project.id}`}
+      aria-labelledby={headingId}
+      className="rounded-lg border border-line bg-surface p-6 transition-colors hover:border-line-strong sm:p-8"
+    >
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <span className="label-mono text-ink-muted" aria-hidden="true">
+          {String(index + 1).padStart(2, '0')}
+        </span>
+        <span className="h-px w-5 bg-line-strong" aria-hidden="true" />
+        <p className="label-mono text-accent">{project.tag}</p>
         {project.status === 'in-development' ? (
-          <span className="rounded-sm border border-navy/20 bg-accent-soft px-2 py-0.5 text-[11px] font-semibold tracking-[0.12em] uppercase text-navy">
+          <span className="label-mono rounded-sm bg-accent-soft px-2 py-0.5 text-navy">
             In Development
           </span>
         ) : null}
       </div>
 
-      <h3 className="mt-4 font-serif text-2xl font-semibold tracking-tight text-ink sm:text-[1.7rem]">
+      <h3
+        id={headingId}
+        className="mt-4 font-serif text-[1.6rem] font-semibold leading-tight tracking-tight text-ink sm:text-[1.8rem]"
+      >
         {project.title}
       </h3>
 
@@ -35,108 +46,97 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {project.description}
       </p>
 
-      {project.problem ? (
-        <div className="mt-6 max-w-3xl">
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-ink-muted">
-            Problem
-          </p>
-          <p className="mt-2 text-sm leading-6 text-ink-secondary">
+      <div className="mt-7 grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+        <div>
+          <h4 className="label-mono text-ink-muted">Problem</h4>
+          <p className="mt-2.5 text-sm leading-6 text-ink-secondary">
             {project.problem}
           </p>
         </div>
-      ) : null}
 
-      {project.solution ? (
-        <div className="mt-6">
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-ink-muted">
-            Solution
-          </p>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-            {project.solution.map((item) => (
-              <li
-                key={item}
-                className="rounded-md border border-line bg-paper px-3 py-2 text-sm text-ink-secondary"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-
-      {project.features ? (
-        <div className="mt-6">
-          <p className="text-xs font-semibold tracking-[0.14em] uppercase text-ink-muted">
-            Capabilities
-          </p>
-          <ul className="mt-3 grid gap-2 sm:grid-cols-2">
-            {project.features.map((item) => (
-              <li
-                key={item}
-                className="rounded-md border border-line bg-paper px-3 py-2 text-sm text-ink-secondary"
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
-
-      <div className="mt-8">
-        <p className="mb-3 text-xs font-semibold tracking-[0.14em] uppercase text-ink-muted">
-          Architecture
-        </p>
-        <ArchitectureFlow steps={project.architecture} />
+        {project.features ? (
+          <div>
+            <h4 className="label-mono text-ink-muted">Capabilities</h4>
+            <ul className="mt-2.5 grid gap-x-6 gap-y-1.5 sm:grid-cols-2">
+              {project.features.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-baseline gap-2 text-sm leading-6 text-ink-secondary"
+                >
+                  <span
+                    className="mt-2 h-1 w-1 shrink-0 rounded-full bg-line-strong"
+                    aria-hidden="true"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
 
-      <ul className="mt-8 flex flex-wrap gap-2" aria-label="Project technologies">
-        {project.technologies.map((tech) => (
-          <li
-            key={tech}
-            className="rounded-md bg-paper px-2.5 py-1 text-xs font-medium text-ink-secondary"
-          >
-            {tech}
-          </li>
-        ))}
-      </ul>
-
-      {hasLinks ? (
-        <div className="mt-6 flex flex-wrap gap-3">
-          {live ? (
-            <a
-              href={live}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
-            >
-              Live
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          ) : null}
-          {repo ? (
-            <a
-              href={repo}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
-            >
-              Source
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          ) : null}
-          {caseStudy ? (
-            <a
-              href={caseStudy}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
-            >
-              Case study
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </a>
-          ) : null}
+      <div className="mt-8">
+        <h4 className="label-mono text-ink-muted">Architecture</h4>
+        <div className="mt-3">
+          <ArchitectureFlow
+            steps={project.architecture}
+            ariaLabel={`${project.title} architecture flow`}
+          />
         </div>
-      ) : null}
+      </div>
+
+      <div className="mt-8">
+        <h4 className="label-mono text-ink-muted">Stack</h4>
+        <div className="mt-3">
+          <TechList
+            items={project.technologies}
+            label={`${project.title} technologies`}
+          />
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <Disclosure
+          summary="Engineering decisions"
+          hint={`${project.decisions.length} trade-offs`}
+        >
+          <DecisionList decisions={project.decisions} />
+        </Disclosure>
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+        {repo ? (
+          <a
+            href={repo}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+          >
+            Source
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+        ) : null}
+        {live ? (
+          <a
+            href={live}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
+          >
+            Live
+            <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </a>
+        ) : null}
+        {project.askVeeraDemo ? (
+          <button
+            type="button"
+            onClick={onAskVeera}
+            className="text-[0.82rem] font-medium text-ink-muted underline decoration-line-strong decoration-1 underline-offset-4 transition-colors hover:text-ink"
+          >
+            Try it on this page
+          </button>
+        ) : null}
+      </div>
     </article>
   )
 }

@@ -37,6 +37,14 @@ npm run build
 npm run preview
 ```
 
+### Quality gates
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
+
 To simulate a GitHub Pages project URL locally:
 
 ```bash
@@ -86,11 +94,18 @@ Content lives in typed data files. Edit these instead of hunting through compone
 
 | File | What it controls |
 | --- | --- |
-| `src/data/profile.ts` | Name, role, email, headline, social URLs, hero badges |
-| `src/data/experience.ts` | Role timeline, bullets, technology tags |
-| `src/data/projects.ts` | Featured projects, architecture steps, optional links |
-| `src/data/skills.ts` | Skill groups |
-| `src/data/architecture.ts` | System-building workflow and principle cards |
+| `src/data/profile.ts` | Name, role, email, headline, hero stack and supporting line, social URLs |
+| `src/data/snapshot.ts` | Career / engineering snapshot strip |
+| `src/data/projects.ts` | Independent projects: problem, architecture, engineering decisions, links |
+| `src/data/products.ts` | Professional (employer) product case studies, grouped by employer |
+| `src/data/capabilities.ts` | Capability groups and the products each one was used on |
+| `src/data/architecture.ts` | System-building workflow and architecture principle cards |
+| `src/data/experience.ts` | Role timeline, highlights, links into product case studies |
+
+`src/data/products.ts` holds employer work and is deliberately public-safe: no
+repository links, no proprietary source, no customer data. Set
+`outcomesMeasured: true` only where a figure was actually measured — it is what
+separates verified metrics from qualitative outcome statements in the UI.
 
 Project links are optional. Leave `live`, `repo`, or `caseStudy` as empty strings until a public URL exists. Buttons render only when a URL is present.
 

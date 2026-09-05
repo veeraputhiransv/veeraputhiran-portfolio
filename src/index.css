@@ -3,18 +3,23 @@
 @theme {
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-ink: #0b1220;
-  --color-ink-secondary: #334155;
-  --color-ink-muted: #64748b;
-  --color-paper: #f6f7f9;
+  --color-ink: #12161c;
+  --color-ink-secondary: #3b444f;
+  /* Chosen so muted text clears WCAG AA (4.5:1) on every background token,
+     including the deeper --color-paper-deep surface. */
+  --color-ink-muted: #626973;
+  --color-paper: #f7f6f3;
+  --color-paper-deep: #f1efea;
   --color-surface: #ffffff;
-  --color-line: #e6e8ec;
-  --color-line-strong: #d0d5dd;
+  --color-line: #e5e2db;
+  --color-line-strong: #cec9bf;
   --color-accent: #1e4a8a;
   --color-accent-hover: #163a6e;
-  --color-accent-soft: #e8eef6;
-  --color-navy: #102033;
+  --color-accent-soft: #eaeef6;
+  --color-indigo: #3f4d9e;
+  --color-navy: #101c2c;
   --color-success: #0f7a5a;
 }
 
@@ -45,6 +50,33 @@ body {
 
 section[id] {
   scroll-margin-top: 5.75rem;
+}
+
+/* Deep-linked case studies sit inside sections, so they need their own
+   offset under the sticky header. */
+[id^='product-'],
+[id^='project-'],
+[id^='employer-'] {
+  scroll-margin-top: 6.5rem;
+}
+
+/* Technical labels: monospace, small caps rhythm. Used for eyebrows,
+   architecture nodes and metadata across sections. */
+.label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
 }
 
 .skip-link {

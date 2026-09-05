@@ -1,3 +1,8 @@
+export type ExperienceProductLink = {
+  label: string
+  href: string
+}
+
 export type ExperienceRole = {
   id: string
   title: string
@@ -6,10 +11,19 @@ export type ExperienceRole = {
   period: string
   location?: string
   context?: string
-  bullets: string[]
+  /** Internal progression within the same employer, where relevant. */
+  progression?: string
+  summary: string
+  highlights: string[]
   technologies: string[]
+  /** Deep links into the professional product case studies above. */
+  products?: ExperienceProductLink[]
 }
 
+/**
+ * Timeline summary only. Product detail lives in the professional product
+ * case studies, which each role links into rather than repeating.
+ */
 export const experience: ExperienceRole[] = [
   {
     id: 'tickmarks',
@@ -18,22 +32,29 @@ export const experience: ExperienceRole[] = [
     period: 'Feb 2026 – Sep 2026',
     location: 'Chennai, India',
     context: 'Finance & ERP Product Engineering',
-    bullets: [
-      'Built backend services and React.js UI modules for finance and ERP products using Python, FastAPI, MySQL and REST APIs.',
-      'Developed document-processing and RAG workflows connecting ERP records, extraction outputs, retrieval context and deterministic validation.',
-      'Designed ERP synchronization and ontology-mapping workflows for company hierarchies, legal entities, dataset mappings and incremental sync.',
-      'Implemented document comparison and risk-enrichment services combining structured ERP information with document signals.',
-      'Designed finance collection workflow APIs covering outstanding identification, customer responses, promise-to-pay, disputes, escalation, recovery and reporting.',
-      'Worked with global stakeholders across requirements, integration validation, debugging, release readiness and production support.',
+    summary:
+      'Backend APIs, AI workflows and product surfaces for finance and ERP systems, delivered across four products spanning workflow compliance, collections, audit provenance and delivery governance.',
+    highlights: [
+      'Backend services and React UI modules for finance and ERP products using Python, FastAPI, MySQL and REST APIs.',
+      'Document-processing and RAG workflows connecting ERP records, extraction output, retrieval context and deterministic validation.',
+      'ERP synchronisation and ontology mapping for company hierarchies, legal entities, dataset mappings and incremental sync.',
+      'Global stakeholder work across requirements, integration validation, release readiness and production support.',
     ],
     technologies: [
       'Python',
       'FastAPI',
       'React',
+      'TypeScript',
       'MySQL',
       'LLM',
       'RAG',
       'REST APIs',
+    ],
+    products: [
+      { label: 'SOP Guidance & Audit Extension', href: '#product-sop-guidance' },
+      { label: 'Collections Workflow Platform', href: '#product-collections' },
+      { label: 'G/L Audit & Provenance', href: '#product-gl-provenance' },
+      { label: 'PMO & Release Governance', href: '#product-pmo' },
     ],
   },
   {
@@ -42,11 +63,13 @@ export const experience: ExperienceRole[] = [
     company: 'Concentrix',
     client: 'Fluence Energy',
     period: 'Oct 2025 – Feb 2026',
-    bullets: [
-      'Delivered enterprise backend services with Java, Spring Boot, PostgreSQL and REST APIs, with attention to correctness, security and maintainability.',
-      'Implemented authenticated APIs using JWT and role-based access control (RBAC) across protected application surfaces.',
-      'Worked on performance-sensitive service paths and data access patterns against PostgreSQL and Firestore on GCP.',
-      'Supported event-driven notification flows and production issues spanning integration, debugging and release support.',
+    context: 'Enterprise Portal Engineering',
+    summary:
+      'Secure Java and Spring Boot services behind an enterprise customer portal, with notification processing, data-access optimisation and production support alongside globally distributed stakeholders.',
+    highlights: [
+      'Authenticated REST APIs with JWT and role-based access control across protected application surfaces.',
+      'Performance-sensitive service and data-access paths against PostgreSQL and Firestore on GCP.',
+      'Event-driven notification flows plus production issue resolution across integration, debugging and release support.',
     ],
     technologies: [
       'Java',
@@ -58,6 +81,9 @@ export const experience: ExperienceRole[] = [
       'Firestore',
       'REST APIs',
     ],
+    products: [
+      { label: 'Fluence Customer Portal', href: '#product-fluence-portal' },
+    ],
   },
   {
     id: 'layerpath',
@@ -65,35 +91,41 @@ export const experience: ExperienceRole[] = [
     company: 'Layerpath',
     period: 'Feb 2025 – Jun 2025',
     context: 'AI SaaS Product',
-    bullets: [
-      'Built and maintained Java/Spring backend services for an AI SaaS product, including asynchronous processing paths for concurrent workloads.',
-      'Worked across AWS infrastructure using Terraform, SQS/SNS, RDS, Lambda and API Gateway to support cloud-native delivery.',
-      'Reduced environment setup time by approximately 70% through infrastructure and developer-workflow improvements.',
-      'Contributed to approximately 30% reduction in customer support issues through backend reliability improvements.',
+    summary:
+      'Backend and infrastructure work on an AI demo platform: browser-based workflow capture, queue-backed AI and media processing, and Terraform-managed AWS environments.',
+    highlights: [
+      'Java and Spring Boot services with asynchronous processing paths for concurrent capture workloads.',
+      'AWS infrastructure via Terraform across API Gateway, Lambda, S3 and IAM.',
+      'Environment setup time reduced by approximately 70%, and customer support issues by approximately 30%.',
     ],
     technologies: [
       'Java',
       'Spring Boot',
       'AWS',
       'Terraform',
-      'SQS',
-      'SNS',
-      'RDS',
       'Lambda',
       'API Gateway',
+      'S3',
+    ],
+    products: [
+      { label: 'AI Interactive Demo Platform', href: '#product-layerpath-demos' },
     ],
   },
   {
-    id: 'zoho-mts',
+    id: 'zoho',
     title: 'Member Technical Staff',
     company: 'Zoho Corporation',
-    period: 'May 2019 – Jan 2025',
-    bullets: [
-      'Worked on Zoho Campaigns across backend services, product features and production operations using Java, Spring Boot, Python, Node.js and related data systems.',
-      'Built and improved ML-assisted spam detection workflows used in campaign delivery and content evaluation paths.',
-      'Designed and operated distributed service work involving Kafka, PostgreSQL, Redis, MongoDB and AWS.',
-      'Improved spam detection accuracy by approximately 40%.',
-      'Reduced API response times by approximately 20%.',
+    period: 'Apr 2017 – Jan 2025',
+    context: 'Marketing SaaS Platform',
+    progression:
+      'Joined as Trainee – Software Engineering (Apr 2017), moved to Member Technical Staff (May 2019).',
+    summary:
+      'Nearly eight years on Zoho Campaigns — backend APIs, high-volume asynchronous delivery workflows, ML-assisted abuse prevention, performance work and production operations.',
+    highlights: [
+      'Backend services and product features using Java, Spring Boot, Python and Node.js across campaign and delivery surfaces.',
+      'ML-assisted spam detection and content moderation in the pre-delivery path, improving detection accuracy by approximately 40%.',
+      'Distributed service work across Kafka, PostgreSQL, Redis, MongoDB and AWS, with API response times reduced by approximately 20%.',
+      'Code review and mentoring for engineers joining the product.',
     ],
     technologies: [
       'Java',
@@ -106,16 +138,9 @@ export const experience: ExperienceRole[] = [
       'MongoDB',
       'AWS',
     ],
-  },
-  {
-    id: 'zoho-trainee',
-    title: 'Trainee – Software Engineering',
-    company: 'Zoho Corporation',
-    period: 'Apr 2017 – May 2019',
-    bullets: [
-      'Built a foundation in Java, SQL, REST APIs, React and Python while contributing to product engineering work.',
-      'Learned full software development lifecycle practices: requirements, implementation, testing, release and support.',
+    products: [
+      { label: 'Zoho Campaigns', href: '#product-zoho-campaigns' },
+      { label: 'Anti-Spam & Content Moderation', href: '#product-anti-spam' },
     ],
-    technologies: ['Java', 'SQL', 'REST APIs', 'React', 'Python', 'SDLC'],
   },
 ]

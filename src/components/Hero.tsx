@@ -6,61 +6,82 @@ type HeroProps = {
   onAskVeera: () => void
 }
 
+const secondaryCta =
+  'inline-flex items-center gap-2 rounded-md border border-line bg-surface px-3.5 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper-deep'
+
 export function Hero({ onAskVeera }: HeroProps) {
   const githubUrl = getSocialUrl(profile.githubUrl)
   const linkedinUrl = getSocialUrl(profile.linkedinUrl)
 
   return (
     <section id="home" className="border-b border-line">
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-24 lg:py-28">
-        <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-ink-secondary">
+      <div className="mx-auto max-w-6xl px-5 pt-14 pb-16 sm:px-8 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24">
+        <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1">
           <span
             className="h-1.5 w-1.5 rounded-full bg-success"
             aria-hidden="true"
           />
-          {profile.availability}
+          <span className="label-mono text-ink-secondary">
+            {profile.availability}
+          </span>
         </p>
 
-        <p className="mt-8 text-sm font-medium tracking-wide text-accent">
-          {profile.role}
-        </p>
-
-        <h1 className="mt-3 font-serif text-[clamp(2.4rem,6vw,4.35rem)] font-semibold leading-[1.08] tracking-tight text-ink">
+        <h1 className="mt-9 font-serif text-[clamp(2.5rem,6.5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-ink">
           {profile.name}
         </h1>
 
-        <p className="mt-6 max-w-2xl text-xl font-medium leading-snug text-ink sm:text-2xl">
+        <p className="mt-4 text-lg font-semibold tracking-tight text-accent sm:text-xl">
+          {profile.role}
+        </p>
+
+        <p className="mt-6 max-w-2xl text-[1.15rem] leading-8 text-ink-secondary sm:text-[1.3rem] sm:leading-9">
           {profile.headline}
         </p>
 
-        <p className="mt-5 max-w-2xl text-base leading-7 text-ink-secondary sm:text-[1.05rem]">
-          {profile.summary}
-        </p>
-
-        <ul className="mt-8 flex flex-wrap gap-2" aria-label="Primary technologies">
-          {profile.heroBadges.map((badge) => (
-            <li
-              key={badge}
-              className="rounded-md border border-line bg-surface px-3 py-1.5 text-sm text-ink-secondary"
-            >
-              {badge}
+        <ul
+          className="mt-9 flex flex-wrap items-center gap-x-2.5 gap-y-2"
+          aria-label="Primary technologies"
+        >
+          {profile.heroStack.map((item, index) => (
+            <li key={item} className="flex items-center gap-2.5">
+              <span className="font-mono text-[0.82rem] font-medium text-ink">
+                {item}
+              </span>
+              {index < profile.heroStack.length - 1 ? (
+                <span className="text-line-strong" aria-hidden="true">
+                  •
+                </span>
+              ) : null}
             </li>
           ))}
         </ul>
 
-        <div className="mt-10 flex flex-wrap gap-3">
+        <p className="mt-4 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-ink-muted">
+          {profile.heroSupporting.map((item, index) => (
+            <span key={item} className="flex items-center gap-2.5">
+              <span className="label-mono">{item}</span>
+              {index < profile.heroSupporting.length - 1 ? (
+                <span className="text-line-strong" aria-hidden="true">
+                  •
+                </span>
+              ) : null}
+            </span>
+          ))}
+        </p>
+
+        <div className="mt-11 flex flex-wrap items-center gap-2.5">
           <a
-            href="#projects"
-            className="inline-flex items-center gap-2 rounded-md bg-navy px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-ink"
+            href="#work"
+            className="inline-flex items-center gap-2 rounded-md bg-navy px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink"
           >
-            View Projects
+            View Engineering Work
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
-          <a
-            href={resumeUrl}
-            download
-            className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper"
-          >
+          <button type="button" onClick={onAskVeera} className={secondaryCta}>
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            Ask Veera AI
+          </button>
+          <a href={resumeUrl} download className={secondaryCta}>
             <Download className="h-4 w-4" aria-hidden="true" />
             Download Resume
           </a>
@@ -69,7 +90,7 @@ export function Hero({ onAskVeera }: HeroProps) {
               href={githubUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper"
+              className={secondaryCta}
             >
               <GitHubIcon className="h-4 w-4" aria-hidden="true" />
               GitHub
@@ -80,20 +101,12 @@ export function Hero({ onAskVeera }: HeroProps) {
               href={linkedinUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper"
+              className={secondaryCta}
             >
               <LinkedInIcon className="h-4 w-4" aria-hidden="true" />
               LinkedIn
             </a>
           ) : null}
-          <button
-            type="button"
-            onClick={onAskVeera}
-            className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper"
-          >
-            <Sparkles className="h-4 w-4" aria-hidden="true" />
-            Ask Veera AI
-          </button>
         </div>
       </div>
     </section>

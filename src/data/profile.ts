@@ -10,22 +10,38 @@ export const profile = {
   availabilityDetail:
     'Open to Senior Backend, AI/GenAI, Senior Software Engineering, Platform Engineering, India Remote and Global Remote opportunities.',
   headline:
-    'Building scalable backend systems, enterprise SaaS platforms and AI-powered workflows.',
+    '9+ years building enterprise SaaS, distributed backend systems, AI workflows and production APIs.',
   summary:
-    '9+ years of experience designing and delivering production-grade backend systems, enterprise applications, distributed services and AI-powered products using Java, Spring Boot, Python, FastAPI, LLMs and RAG.',
+    'I design and ship backend systems and applied-AI workflows for enterprise products — REST and event-driven services in Java and Python, retrieval-grounded AI, and the data models, integrations and operational surfaces those systems need to survive production.',
   linkedinUrl: 'https://www.linkedin.com/in/veeraputhiran-s-3218ba148/',
   githubUrl: 'https://github.com/veeraputhiransv',
   resumeFileName: 'Veeraputhiran_S_Resume.pdf',
-  heroBadges: [
+  /** Primary technical positioning shown in the hero, monospaced. */
+  heroStack: [
     'Java',
     'Spring Boot',
     'Python',
     'FastAPI',
-    'LLM',
-    'RAG',
+    'LLM/RAG',
     'Kafka',
     'React',
   ],
+  /** Supporting positioning line under the hero stack. */
+  heroSupporting: [
+    'Ex-Zoho',
+    'Enterprise SaaS',
+    'Finance / ERP',
+    'AI Systems',
+  ],
+  domains: [
+    'Enterprise SaaS',
+    'Finance / ERP',
+    'Distributed Systems',
+    'AI Systems',
+    'API Architecture',
+    'Product Engineering',
+  ],
+  employers: ['Zoho', 'Layerpath', 'Concentrix / Fluence Energy', 'Tickmarks'],
 } as const
 
 export const resumeUrl = `${import.meta.env.BASE_URL}${profile.resumeFileName}`
