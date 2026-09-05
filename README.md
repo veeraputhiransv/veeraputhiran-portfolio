@@ -122,6 +122,20 @@ Until those placeholders are replaced:
 
 Do not leave `PASTE_...` values visible in the UI; the site already suppresses them.
 
+## Ask Veera AI
+
+The hero includes a secondary **Ask Veera AI** control. It opens a drawer (desktop) or full-width panel (mobile). It does not auto-open.
+
+Set the copilot API URL in `.env` for local development:
+
+```
+VITE_RECRUITER_API_URL=http://localhost:8000
+```
+
+For GitHub Pages, add a repository variable named `VITE_RECRUITER_API_URL` under **Settings → Secrets and variables → Actions → Variables**. The deploy workflow injects it at build time. Do not use a localhost URL in production.
+
+Until that variable is set, the assistant stays closed by default and shows a professional unavailable message if someone opens it and asks a question.
+
 ## SEO notes
 
 `index.html` includes title, description, Open Graph, and Twitter tags.

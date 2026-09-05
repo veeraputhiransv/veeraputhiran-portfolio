@@ -34,6 +34,7 @@ jobs:
         run: npm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
+          VITE_RECRUITER_API_URL: ${{ vars.VITE_RECRUITER_API_URL }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,8 +1,12 @@
-import { ArrowRight, Download } from 'lucide-react'
+import { ArrowRight, Download, Sparkles } from 'lucide-react'
 import { getSocialUrl, profile, resumeUrl } from '../data/profile'
 import { GitHubIcon, LinkedInIcon } from './icons'
 
-export function Hero() {
+type HeroProps = {
+  onAskVeera: () => void
+}
+
+export function Hero({ onAskVeera }: HeroProps) {
   const githubUrl = getSocialUrl(profile.githubUrl)
   const linkedinUrl = getSocialUrl(profile.linkedinUrl)
 
@@ -82,6 +86,14 @@ export function Hero() {
               LinkedIn
             </a>
           ) : null}
+          <button
+            type="button"
+            onClick={onAskVeera}
+            className="inline-flex items-center gap-2 rounded-md border border-line bg-surface px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:border-line-strong hover:bg-paper"
+          >
+            <Sparkles className="h-4 w-4" aria-hidden="true" />
+            Ask Veera AI
+          </button>
         </div>
       </div>
     </section>
